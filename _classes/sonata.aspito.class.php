@@ -56,7 +56,8 @@ class Aspito {
     'forceGZ'   => false, // Force to serve gzip
     'forceMIN'  => false, // Force to serve ugli
     'forceBULK' => false, // Force to serve bulk
-    'forcePROD' => false,  // Force production
+    'forcePROD' => false, // Force production
+    'forceDEBUG'=> false, // Force debug
 
     // Headers
     'h' => array(
@@ -208,6 +209,9 @@ class Aspito {
       if (isset($_GET['PROD'])) {
         $this->data['forcePROD'] = true;
       }
+      if (isset($_GET['DEBUG'])) {
+        $this->data['forceDEBUG'] = true;
+      }
     }
   }
 
@@ -295,7 +299,10 @@ class Aspito {
     $cmd .= '"' . $this->data['node']['sass'] . '" ';
     $cmd .= $ts . ' ' . $t_ ; //. ' 2>&1'
     exec($cmd, $output);
-    //print_a($cmd);
+    if ($this->data['forceDEBUG']) {
+      print_r($output);
+      die;
+    }
 
     // Rewad resulting file
     $this->data['b'] = file_get_contents($t_);
