@@ -1,0 +1,26 @@
+Options -Indexes -Includes
+
+<FilesMatch "\.(php|pl|py|jsp|asp|htm|shtml|sh|cgi|php4|php5)$">
+  Deny from All
+</FilesMatch>
+
+<Files __aspito.php>
+  Allow from All
+</Files>
+
+#------------------------------------------------------------------------------
+#FICHEROS COMPRIMIDOS CON GZIP
+
+<FilesMatch "\\.js.gz$">
+  ForceType text/javascript
+  Header set Content-Encoding: gzip
+</FilesMatch>
+
+<FilesMatch "\\.js$">
+  RewriteEngine On
+  RewriteCond %{HTTP_USER_AGENT} !".*Safari.*"
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule (.*)\.js$ $1\.js.gz [L]
+  ForceType text/javascript
+</FilesMatch>
