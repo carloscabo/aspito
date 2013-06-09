@@ -1,0 +1,56 @@
+AddDefaultCharset UTF-8
+Options -Indexes +Includes
+DirectoryIndex index.php index.htm index.html
+
+<Files .htaccess>
+	order deny,allow
+	deny from all
+</Files>
+
+<Files ~ "\.(inc|yml|sql|db|db3)$">
+	order allow,deny
+	deny from all
+</Files>
+
+#FUERZA LA DESCARGA DE FICHEROS
+<FilesMatch "\.(?i:doc|docm|docx|xls|xlsx|xlsm|xlsb|ppt|pptx|pptm|ppsx|pdf)$">
+	#Header set Pragma private
+	ForceType application/octet-stream
+	Header set Content-Disposition attachment
+</FilesMatch>
+
+RewriteEngine On
+Options +FollowSymLinks
+
+#-------------------------------------
+#PAGINAS DE ERROR
+#-------------------------------------
+ErrorDocument 404 /404.php
+
+#ADD WWW
+#RewriteCond %{HTTP_HOST} ^rgb.to$
+#RewriteRule ^(.*)$ http://www.rgb.to/$1 [R=301,L]
+
+#REMOVE WWW
+#RewriteCond %{HTTP_HOST} !^rgb.to$ [NC]
+#RewriteRule ^(.*)$ http://rgb.to/$1 [L,R=301]
+
+#ADD TRAILING SLASH
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^.*[^/]$ /$0/ [L,R=301]
+
+#-------------------------------------
+# CSS / JS assets ASPITO
+#-------------------------------------
+# If not in a .DEV domain it returns a compiled asset
+
+RewriteCond %{HTTP_HOST} !^(.+)\.dev
+RewriteRule ^css/__aspito.php$ /css/_css.compiled.css.gz [NC,L]
+
+RewriteCond %{HTTP_HOST} !^(.+)\.dev
+RewriteRule ^js/__aspito.php$ /js/_js.cache.js.gz [NC,L]
+
+#------------------------------------------
+#ESTAS REGLAS SON PARA LA PARTE PUBLICA !!!
+#------------------------------------------
+
