@@ -52,6 +52,36 @@ In your localhost must be named:
 
 - You can touch several things in the **sonata.aspito.class.php** file (as default filenames, for instance), but **if you do so remember to edit the .htaccess files you can fin in the root folder and also in /css and /js folders.**
 
+Debug / Flags
+=============
+
+I've added some debub parameters to try to identify some of the usual projects before uploading to production.
+
+Following how to add the flags and what does each one of them (always **uppercased**):
+
+     <!-- CSS Files -->
+     <link rel="stylesheet" type="text/css" href="__aspito.php?FLAG">
+     
+     <!-- JS Files -->
+     <script type="text/javascript" src="__aspito.php?FLAG"></script>
+     
+## GZ
+
+After process all the files (minimify, compile, clean... etc) Returns the resulting production file instead the result stored in the _buffer_.
+
+This helps you to test the resulting compiled files in development environment before upload them to the server.
+
+## MIN
+
+Same as previous one, but returning the **minimified file uncompressed** (not Gzipped).
+
+## BULK
+Returns the resulting file before minifiying or compressing, this must be the same as the _buffer_ output, but read from resulting file.
+
+## PROD
+
+Simulates that we are on production server, that is, ASPITO does **not perform any compressión / compilation tasks, only return a previously generated GZ file**.
+
 Disclaimer
 ==========
 
