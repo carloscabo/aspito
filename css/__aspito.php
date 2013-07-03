@@ -4,7 +4,7 @@
 
       //DbugL::help();
 
-  require $_SERVER['DOCUMENT_ROOT'] . '/_classes/sonata.aspito.class.php';
+  require $_SERVER['DOCUMENT_ROOT'] . '/_classes/snt.aspito.php';
 
   $aspito = new Aspito();
 
