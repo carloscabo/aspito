@@ -169,7 +169,7 @@ class Aspito {
     $host = explode('.', $parsedUrl['host']);
     if ($host[0] == $this->data['lh_sub'] || end($host) == $this->data['lh_ext'] || in_array($_SERVER['REMOTE_ADDR'], array("127.0.0.1","::1"))) {
       $this->data['is_local_host'] = true;
-      require $_SERVER['DOCUMENT_ROOT'] . '/_classes/debuglib.php';
+      require $_SERVER['DOCUMENT_ROOT'] . '/_classes/lib/debuglib.php';
     }
   }
 
