@@ -11,7 +11,7 @@ class Aspito {
   //VALORES POR DEFECTO
   private $data = array(
     // Version
-    'v' => '0.1beta 06/2013',
+    'v' => '0.2beta 06/2013',
 
     // Filenames
     'fn' => array(
@@ -299,8 +299,9 @@ class Aspito {
     $cmd .= '"' . $this->data['node']['sass'] . '" ';
     $cmd .= $ts . ' ' . $t_ ; //. ' 2>&1'
     exec($cmd, $output);
-    if ($this->data['forceDEBUG']) {
-      print_r($output);
+
+    if ($this->data['forceDEBUG'] || !file_exists($t_)) {
+      $this->cssError($output);
       die;
     }
 
@@ -309,6 +310,38 @@ class Aspito {
 
     if (file_exists($ts)) { unlink($ts); }
     if (file_exists($t_)) { unlink($t_); }
+  }
+
+  function cssError ($msg) {
+    $msg = implode($msg, " \A ");
+    $msg = str_replace(array('[31m','[32m','[33m','[39m', '\n"'), '', $msg);
+    // echo $msg ;
+    // die;
+
+    header($this->data['h']['css']);
+echo <<<EOD
+body {
+  margin:0;padding:0;
+}
+
+body:after {
+  content: '$msg';
+  display:block;
+  white-space: pre-wrap;
+  /*width:350px;*/
+  padding:20px;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:9999;
+  background:#9d0038;
+
+  font-family:"Courier New", Courier, monospace;
+  font-size:16px;
+  color:#fff;
+}
+EOD;
+die;
   }
 
   function force_prod ($type) {
