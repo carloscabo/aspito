@@ -6,7 +6,9 @@
  * GitHub
  */
 
-class Aspito {
+namespace snt;
+
+class aspito {
 
   //VALORES POR DEFECTO
   private $data = array(
